@@ -1,0 +1,33 @@
+---
+import Base from '../layouts/Base.astro';
+import TextCard from '../components/TextCard.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import { business, telHref } from '../data/site.js';
+---
+<Base
+  title="Contact PRO FLO Drainage | Free Site Visit in Surrey & Lower Mainland"
+  description="Call or text 604-369-0039 for a free site visit and written quote. PRO FLO Drainage & Landscape Construction, Unit 441, 7184 120th St, Surrey, BC."
+>
+  <section class="wrap section" aria-labelledby="contact-title">
+    <div class="two-col quote-grid">
+      <div>
+        <h1 class="h2 quote-h2" id="contact-title">Free site visit. Written quote. No pressure.</h1>
+        <a class="big-phone" href={telHref}>{business.phoneDisplay}</a>
+        <p class="quote-contact">Call or text. <a href={`mailto:${business.email}`}>{business.email}</a></p>
+      </div>
+      <div class="quote-extra" style="align-self:end">
+        <p>We would be happy to do an on-site visit and discuss your project needs at your convenience.</p>
+        <p><strong>{business.street}</strong><br />{business.city}, {business.region} {business.postalCode}</p>
+        {business.hours && <p>{business.hours}</p>}
+      </div>
+    </div>
+
+    <div class="two-col quote-grid" style="margin-top:clamp(40px,5vw,72px)">
+      <div>
+        <h2 class="h-sub text-card-title" style="margin:0 0 20px">Request a free site visit</h2>
+        <QuoteForm id="contact-quote" />
+      </div>
+      <TextCard id="contact-msg" onLight />
+    </div>
+  </section>
+</Base>

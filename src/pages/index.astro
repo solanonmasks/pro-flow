@@ -1,0 +1,214 @@
+---
+import Base from '../layouts/Base.astro';
+import TextCard from '../components/TextCard.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import Lightbox from '../components/Lightbox.astro';
+import QuoteForm from '../components/QuoteForm.astro';
+import {
+  business, telHref, img, srcset, badges, heroPhotos, steps, services, work,
+  process, reviews, serviceArea,
+} from '../data/site.js';
+
+const lastTown = serviceArea[serviceArea.length - 1];
+const otherTowns = serviceArea.slice(0, -1).join(', ');
+---
+<Base
+  title="Drainage Contractor Surrey & Lower Mainland | PRO FLO Drainage"
+  description="Family-owned drainage and landscape construction in Surrey, BC. Perimeter drains, sewer lines, sumps, retaining walls and patios. Free site visit. Call or text 604-369-0039."
+>
+  <!-- Hero -->
+  <section class="bg-navy" aria-labelledby="hero-title">
+    <div class="wrap two-col hero-grid">
+      <div>
+        <p class="eyebrow">Family owned · 30+ years · Lower Mainland &amp; Fraser Valley</p>
+        <h1 class="h1" id="hero-title">Water goes away from your house. <span class="accent">We make sure of it.</span></h1>
+        <p class="hero-sub">Perimeter and yard drainage, sewer and water lines, sumps, foundation cracks. Then the walls, patios and walkways that go back on top.</p>
+        <div class="btn-row">
+          <a class="btn btn-blue" href={telHref}>Call {business.phoneDisplay}</a>
+          <a class="btn btn-outline" href="#quote">Book a free site visit</a>
+        </div>
+      </div>
+      <TextCard id="hero-msg" />
+    </div>
+    <div class="wrap photo-strip">
+      {heroPhotos.map((p, i) => (
+        <img
+          src={img(p.file, i === 0 ? 1600 : 900)}
+          srcset={srcset(p.file, [500, 900, 1600])}
+          sizes={i === 0 ? '(max-width: 1480px) 50vw, 740px' : '(max-width: 1480px) 25vw, 370px'}
+          alt={p.alt}
+          fetchpriority={i === 0 ? 'high' : undefined}
+        />
+      ))}
+    </div>
+  </section>
+
+  <!-- Proof strip -->
+  <section class="proof" aria-label="Why people trust us">
+    <div class="wrap">
+      <img src={badges.homestars} alt="HomeStars Verified" height="64" style="height:64px;width:auto" loading="lazy" />
+      <img src={badges.bbb} alt="BBB A+ Rating" height="48" style="height:48px;width:auto" loading="lazy" />
+      <span>30+ years in the trade</span>
+      <span>Free site visit + written quote</span>
+      <span>All major credit cards</span>
+    </div>
+  </section>
+
+  <!-- Drainage steps -->
+  <section id="drainage" class="wrap section" aria-labelledby="drainage-title">
+    <div class="two-col drainage-grid" data-tabs>
+      <div>
+        <h2 class="h2" id="drainage-title" style="margin-bottom:20px">Find it first. Then fix only what's broken.</h2>
+        <p class="lead">Most drainage calls start with "the basement smells" or "the yard won't dry out." We don't guess and we don't dig the whole house to find out. Here's the order we work in:</p>
+        <div class="step-list" role="tablist" aria-label="How we work on drainage">
+          {steps.map((s, i) => (
+            <button
+              type="button"
+              class="step-btn"
+              role="tab"
+              id={`step-tab-${i}`}
+              aria-controls={`step-panel-${i}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              data-tab={i}
+            >
+              <span class="step-title h-sub">{s.title}</span>
+              <span class="step-tag">{s.tag}</span>
+            </button>
+          ))}
+        </div>
+        {steps.map((s, i) => (
+          <p class="step-body" role="tabpanel" id={`step-panel-${i}`} aria-labelledby={`step-tab-${i}`} data-panel={i} hidden={i !== 0}>{s.body}</p>
+        ))}
+      </div>
+      <div>
+        {steps.map((s, i) => (
+          <div class="step-photo" data-panel={i} hidden={i !== 0}>
+            <img
+              src={img(s.file)}
+              srcset={srcset(s.file)}
+              sizes="(max-width: 1100px) 100vw, 680px"
+              alt={s.alt}
+              loading="lazy"
+              decoding="async"
+            />
+            <p aria-hidden="true">{s.alt}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Services -->
+  <section id="services" class="bg-blue" aria-labelledby="services-title">
+    <div class="wrap section" data-tabs>
+      <div class="section-head">
+        <h2 class="h2" id="services-title" style="max-width:900px">Everything from the drain tile up.</h2>
+        <div class="tabs" role="tablist" aria-label="Services">
+          {services.map((s, i) => (
+            <button
+              type="button"
+              class="tab"
+              role="tab"
+              id={`svc-tab-${i}`}
+              aria-controls={`svc-panel-${i}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              data-tab={i}
+            >{s.label}</button>
+          ))}
+        </div>
+      </div>
+      {services.map((s, i) => (
+        <div class="two-col svc-grid" role="tabpanel" id={`svc-panel-${i}`} aria-labelledby={`svc-tab-${i}`} data-panel={i} hidden={i !== 0}>
+          <img
+            src={img(s.file, 1400)}
+            srcset={srcset(s.file, [600, 1000, 1400])}
+            sizes="(max-width: 1100px) 100vw, 680px"
+            alt={s.label}
+            loading="lazy"
+            decoding="async"
+          />
+          <div>
+            <p class="svc-intro">{s.intro}</p>
+            <ul class="svc-list">
+              {s.items.map((it) => (
+                <li><span>{it.name}</span>{it.note && <span class="note">{it.note}</span>}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Before & after -->
+  <section id="work" class="wrap section" aria-labelledby="work-title">
+    <div class="work-head">
+      <h2 class="h2" id="work-title">Before &amp; after</h2>
+      <p>Real jobs from this year and last. Tap any photo to see it bigger. <a href="/photo-gallery">See the full photo gallery</a>.</p>
+    </div>
+    <WorkGrid photos={work} />
+  </section>
+  <Lightbox />
+
+  <!-- About -->
+  <section id="about" class="bg-mist about" aria-labelledby="about-title">
+    <div class="wrap section two-col">
+      <div>
+        <h2 class="h2" id="about-title" style="margin-bottom:22px">A family business. The same people from quote to cleanup.</h2>
+        <p class="body">PRO FLO is family owned and run out of Surrey, with more than 30 years in drainage and landscape construction between us.</p>
+        <p class="body" style="margin:0">We come out, look at the site with you, and give you a written quote you can actually read. If it's a drainage fix and a patio, it's one crew and one bill.</p>
+      </div>
+      <dl class="process">
+        {process.map((p) => (
+          <div class="process-row">
+            <dt class="h-sub">{p.t}</dt>
+            <dd>{p.d}</dd>
+          </div>
+        ))}
+      </dl>
+    </div>
+  </section>
+
+  <!-- Reviews -->
+  <section class="wrap section" aria-label="Reviews">
+    <div class="two-col reviews-grid">
+      {reviews.map((r) => (
+        <figure class="review">
+          <blockquote>“{r.text}”</blockquote>
+          <figcaption>{r.who} <span>· {r.job}</span></figcaption>
+        </figure>
+      ))}
+    </div>
+    <p class="reviews-more">
+      More reviews on {business.homestars ? <a href={business.homestars}>HomeStars</a> : 'HomeStars'} and <a href={business.facebook}>Facebook</a>
+    </p>
+  </section>
+
+  <!-- Service area -->
+  <section class="bg-navy" aria-label="Service area">
+    <div class="wrap section">
+      <p class="area-intro">Based in Surrey. We work from Vancouver to Abbotsford:</p>
+      <p class="area-list">{otherTowns} <span class="and">and</span> {lastTown}.</p>
+    </div>
+  </section>
+
+  <!-- Quote -->
+  <section id="quote" class="wrap section" aria-labelledby="quote-title">
+    <div class="two-col quote-grid">
+      <div>
+        <h2 class="h2 quote-h2" id="quote-title">Free site visit. Written quote. No pressure.</h2>
+        <a class="big-phone" href={telHref}>{business.phoneDisplay}</a>
+        <p class="quote-contact">Call or text. <a href={`mailto:${business.email}`}>{business.email}</a></p>
+      </div>
+      <div>
+        <QuoteForm id="home-quote" />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  import '../scripts/tabs.js';
+</script>

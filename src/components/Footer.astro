@@ -1,0 +1,30 @@
+---
+import { business, logo, telHref } from '../data/site.js';
+const year = new Date().getFullYear();
+---
+<footer class="site-footer">
+  <div class="wrap footer-grid">
+    <div class="footer-brand">
+      <img src={logo} alt="" width="64" height="64" loading="lazy" />
+      <span class="footer-brand-name">PRO FLO<span>Drainage &amp; Landscape Construction</span></span>
+    </div>
+    <div class="footer-col">
+      <a class="footer-phone" href={telHref}>{business.phoneDisplay}</a>
+      <a href={`mailto:${business.email}`}>{business.email}</a>
+      <span>{business.street}<br />{business.city}, {business.region} {business.postalCode}</span>
+    </div>
+    <nav class="footer-col" aria-label="Footer">
+      <a href="/#drainage">Drainage</a>
+      <a href="/#services">Landscape construction</a>
+      <a href="/#work">Before &amp; after</a>
+      <a href="/photo-gallery">Photo gallery</a>
+      <a href="/contact-us">Free estimate</a>
+    </nav>
+    <div class="footer-col">
+      <a href={business.facebook}>Facebook</a>
+      <a href={business.instagram}>Instagram</a>
+      <span>All major credit cards accepted</span>
+    </div>
+  </div>
+  <div class="wrap copyright">© {year} {business.name}</div>
+</footer>
