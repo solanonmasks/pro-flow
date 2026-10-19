@@ -1,0 +1,40 @@
+---
+// Free site visit request form.
+// It is set up for Netlify Forms: once the site is on Netlify, submissions show
+// up in the Netlify dashboard and can be emailed to proflodrainage@gmail.com
+// (Netlify → Site → Forms → Form notifications).
+// The hidden "bot-field" is a spam trap: real people never see or fill it.
+import { business, telHref } from '../data/site.js';
+const id = Astro.props.id ?? 'quote';
+---
+<form
+  class="quote-form"
+  name="quote"
+  method="POST"
+  action="/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  data-quote-form
+  data-success={`${id}-success`}
+>
+  <input type="hidden" name="form-name" value="quote" />
+  <p class="honeypot" aria-hidden="true">
+    <label>Leave this empty <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+  </p>
+  <label>Name<input name="name" required type="text" autocomplete="name" /></label>
+  <label>Phone<input name="phone" required type="tel" autocomplete="tel" /></label>
+  <label class="full">Address of the job<input name="address" type="text" placeholder="Street and city" autocomplete="street-address" /></label>
+  <label class="full">What's going on?<textarea name="message" rows="4" placeholder="Water in the crawlspace every winter. House built 1985."></textarea></label>
+  <p class="form-error" data-form-error hidden role="alert">
+    Sorry, that didn't send. Please call or text <a href={telHref}>{business.phoneDisplay}</a>.
+  </p>
+  <button type="submit" class="btn btn-navy">Request my free site visit</button>
+</form>
+<div class="form-success" id={`${id}-success`} hidden tabindex="-1" role="status">
+  <p class="h-sub">Thanks, we've got it.</p>
+  <p>We'll call you back to set up a time to come out, usually the same day.</p>
+</div>
+
+<script>
+  import '../scripts/quote-form.js';
+</script>

@@ -1,0 +1,31 @@
+---
+// "Text us the problem" card with the quick-pick chips.
+import { business, textChips, smsHref } from '../data/site.js';
+---
+<div class:list={["text-card", { "text-card--on-light": Astro.props.onLight }]} data-text-card data-phone={business.phoneLink}>
+  <div class="text-card-head">
+    <h2 class="h-sub text-card-title" style="margin:0">Text us the problem</h2>
+    <span class="text-card-note">Photos welcome</span>
+  </div>
+  <div class="chips" role="group" aria-label="What do you need help with?">
+    {textChips.map((label) => (
+      <button type="button" class="chip" data-chip={label} aria-pressed="false">{label}</button>
+    ))}
+  </div>
+  <div class="msg-box">
+    <label class="sr-only" for={Astro.props.id ?? 'text-msg'}>Your message</label>
+    <textarea
+      id={Astro.props.id ?? 'text-msg'}
+      rows="4"
+      placeholder="Hi, water is pooling against the back of the house after rain. Can you come take a look? I'm in Surrey."
+    ></textarea>
+  </div>
+  <div class="send-row">
+    <a class="btn btn-navy" data-send href={smsHref('Hi PRO FLO, I need a quote.')}>Send as a text</a>
+    <span class="help">Opens your messages app to {business.phoneDisplay}. We usually reply the same day.</span>
+  </div>
+</div>
+
+<script>
+  import '../scripts/text-card.js';
+</script>

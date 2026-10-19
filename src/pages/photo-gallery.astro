@@ -1,0 +1,47 @@
+---
+import Base from '../layouts/Base.astro';
+import WorkGrid from '../components/WorkGrid.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { business, telHref, smsHref, gallery } from '../data/site.js';
+---
+<Base
+  title="Photo Gallery: Retaining Walls, Concrete & Drainage | PRO FLO Drainage"
+  description="Before and after photos of retaining walls, concrete stairs, walkways and drainage jobs by PRO FLO in Surrey and the Lower Mainland."
+>
+  <section class="wrap section" aria-labelledby="gallery-title" data-tabs>
+    <div class="section-head">
+      <h1 class="h2" id="gallery-title">Photo gallery</h1>
+      <div class="tabs" role="tablist" aria-label="Photo categories">
+        {gallery.map((g, i) => (
+          <button
+            type="button"
+            class="tab"
+            role="tab"
+            id={`gal-tab-${i}`}
+            aria-controls={`gal-panel-${i}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            tabindex={i === 0 ? 0 : -1}
+            data-tab={i}
+          >{g.label}</button>
+        ))}
+      </div>
+    </div>
+    <p class="lead">Real jobs from around the Lower Mainland. Tap any photo to see it bigger.</p>
+    {gallery.map((g, i) => (
+      <div role="tabpanel" id={`gal-panel-${i}`} aria-labelledby={`gal-tab-${i}`} data-panel={i} hidden={i !== 0}>
+        {g.photos.length > 0 ? (
+          <WorkGrid photos={g.photos} />
+        ) : (
+          <div class="empty-note">
+            <p>Photos coming soon. Want to see similar jobs? <a href={smsHref('Hi PRO FLO, can you send me photos of ' + g.label.toLowerCase() + ' jobs?')}>Text us</a> or call <a href={telHref}>{business.phoneDisplay}</a>.</p>
+          </div>
+        )}
+      </div>
+    ))}
+  </section>
+  <Lightbox />
+</Base>
+
+<script>
+  import '../scripts/tabs.js';
+</script>

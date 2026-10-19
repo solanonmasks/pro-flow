@@ -1,0 +1,8 @@
+---
+// Call / Text bar fixed to the bottom of the screen on phones and tablets (below 1100px).
+import { telHref, smsHref } from '../data/site.js';
+---
+<div class="mobile-bar">
+  <a class="call" href={telHref}>Call</a>
+  <a class="text" href={smsHref()}>Text a photo</a>
+</div>
